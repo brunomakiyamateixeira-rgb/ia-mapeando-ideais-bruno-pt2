@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de rotinas de estudos Bruno Makiyama</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET & VARIÁVEIS --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #6C5CE7;
+            --primary-light: #A29BFE;
+            --bg-dark: #0F0C20;
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --text-color: #F1F2F6;
+            --text-dim: #A4B0BE;
+            --accent: #FF7675;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- FUNDO 3D EM CSS --- */
+        .bg-3d-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        .bg-3d-grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                linear-gradient(to right, rgba(108, 92, 231, 0.15) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(108, 92, 231, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(60deg) translateZ(-100px);
+            animation: moveGrid 20s linear infinite;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: floatOrb 10s ease-in-out infinite alternate;
+        }
+
+        .orb-1 {
+            width: 350px;
+            height: 350px;
+            background: #6C5CE7;
+            top: 10%;
+            left: 15%;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: #FF7675;
+            bottom: 10%;
+            right: 15%;
+            animation-delay: -5s;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: rotateX(60deg) translateY(0); }
+            100% { transform: rotateX(60deg) translateY(50px); }
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-40px) scale(1.1); }
+        }
+
+        /* --- LAYOUT PRINCIPAL --- */
+        header {
+            text-align: center;
+            padding: 3rem 1rem 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFF, var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* --- GRID DE CARDS --- */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.8rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-tag {
+            align-self: flex-start;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--primary-light);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-btn {
+            background: transparent;
+            color: #FFF;
+            border: 1px solid var(--card-border);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .card:hover .card-btn {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* --- EFEITO MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: #16122e;
+            border: 1px solid var(--card-border);
+            width: 100%;
+            max-width: 550px;
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #FFF;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--accent);
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #FFF;
+        }
+
+        .modal-body {
+            margin-top: 1.2rem;
+        }
+
+        .modal-section {
+            margin-bottom: 1.2rem;
+        }
+
+        .modal-section h4 {
+            color: var(--primary-light);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .modal-section p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.6rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fundo 3D -->
+    <div class="bg-3d-container">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="bg-3d-grid"></div>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header>
+        <h1>Organizador de rotinas de estudos Bruno Makiyama</h1>
+        <p>Protótipo Interativo: Mapeamento dos principais desafios, incômodos e insatisfações da vida estudantil.</p>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main>
+        <div class="cards-grid">
+
+            <!-- Card 1 -->
+            <div class="card" onclick="openModal(1)">
+                <div>
+                    <span class="card-tag">Insatisfação</span>
+                    <h3>Procrastinação & Falta de Foco</h3>
+                    <p>Dificuldade em iniciar as tarefas e distrações constantes com redes sociais e celular.</p>
+                </div>
+                <button class="card-btn">Ver Solução & Detalhes</button>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card" onclick="openModal(2)">
+                <div>
+                    <span class="card-tag">Organização</span>
+                    <h3>Sobrecarga de Conteúdo</h3>
+                    <p>Sensação de estar afogando em tantas matérias, prazos e trabalhos acumulados.</p>
+                </div>
+                <button class="card-btn">Ver Solução & Detalhes</button>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card" onclick="openModal(3)">
+                <div>
+                    <span class="card-tag">Incômodo</span>
+                    <h3>Esaustão e Burnout Estudantil</h3>
+                    <p>Cansaço mental extremo por falta de pausas estratégicas e noites mal dormidas.</p>
+                </div>
+                <button class="card-btn">Ver Solução & Detalhes</button>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card" onclick="openModal(4)">
+                <div>
+                    <span class="card-tag">Rotina</span>
+                    <h3>Falta de Planejamento Claro</h3>
+                    <p>Não saber por onde começar a estudar no dia, perdendo tempo decidindo matérias.</p>
+                </div>
+                <button class="card-btn">Ver Solução & Detalhes</button>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="card" onclick="openModal(5)">
+                <div>
+                    <span class="card-tag">Problema Real</span>
+                    <h3>Ambiente & Materiais Dispersos</h3>
+                    <p>Arquivos espalhados em várias pastas, anotações perdidas e bagunça no espaço físico.</p>
+                </div>
+                <button class="card-btn">Ver Solução & Detalhes</button>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="card" onclick="openModal(6)">
+                <div>
+                    <span class="card-tag">Insatisfação</span>
+                    <h3>Estudo Passivo Sem Retenção</h3>
+                    <p>Ler horas de teoria sem conseguir lembrar do conteúdo na hora de realizar a prova.</p>
+                </div>
+                <button class="card-btn">Ver Solução & Detalhes</button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Estrutura do Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-header">
+                <span class="card-tag" id="modalTag">TAG</span>
+                <h2 id="modalTitle">Título da Categoria</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4>🚨 O Incômodo / Problema</h4>
+                    <p id="modalProblem">Descrição detalhada do problema que afeta a rotina do estudante.</p>
+                </div>
+                <div class="modal-section">
+                    <h4>💡 Solução Proposta pelo App</h4>
+                    <p id="modalSolution">Como a ferramenta do Bruno Makiyama resolverá este ponto na versão final.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para controle do Modal -->
+    <script>
+        // Dados dos problemas reais mapeados
+        const detailsData = {
+            1: {
+                tag: "Insatisfação",
+                title: "Procrastinação & Falta de Foco",
+                problem: "O estudante sente constante ansiedade para começar e acaba adiando. Quando senta para estudar, notificações de celular e redes sociais quebram o fluxo de atenção a cada 10 minutos.",
+                solution: "Módulo com temporizador Pomodoro integrado que bloqueia notificações de distração e divide o estudo em 'blocos de foco' acionáveis com pequenas recompensas."
+            },
+            2: {
+                tag: "Organização",
+                title: "Sobrecarga de Conteúdo",
+                problem: "Muitas disciplinas acontecendo ao mesmo tempo. O estudante não consegue priorizar o que é urgente versus o que é importante, gerando pânico em semanas de provas.",
+                solution: "Algoritmo de Priorização Automática (Matriz de Eisenhower) que organiza as entregas por nível de urgência e peso na nota final."
+            },
+            3: {
+                tag: "Incômodo",
+                title: "Exaustão e Burnout Estudantil",
+                problem: "Estudar muitas horas seguidas sem descansar adequadamente gera fadiga mental e queda brusca no rendimento diário, tornando a rotina frustrante.",
+                solution: "Alertas inteligentes de descanso obrigatório e monitor do nível de energia diário para recomendar quando parar ou trocar de matéria."
+            },
+            4: {
+                tag: "Rotina",
+                title: "Falta de Planejamento Claro",
+                problem: "Perda de tempo diária pensando em 'o que vou estudar hoje?'. Sem um cronograma definido, o estudante foca apenas nas matérias que gosta e negligencia as difíceis.",
+                solution: "Gerador de Cronograma Semanal Automático baseado no tempo disponível e nas maiores dificuldades do aluno."
+            },
+            5: {
+                tag: "Problema Real",
+                title: "Ambiente & Materiais Dispersos",
+                problem: "PDFs espalhados no computador, anotações soltas no caderno e links perdidos no WhatsApp. A busca por materiais consome tempo útil de estudo.",
+                solution: "Central de Arquivos Inteligente por Disciplina, onde resumos, PDFs e links úteis ficam reunidos num único workspace virtual."
+            },
+            6: {
+                tag: "Insatisfação",
+                title: "Estudo Passivo Sem Retenção",
+                problem: "A falsa sensação de aprendizado apenas lendo ou grifando textos. No dia do teste, o aluno sofre com o 'branco' por não ter praticado a memória ativa.",
+                solution: "Sistema integrado de Flashcards com Repetição Espaçada (SRS) e quizzes rápidos gerados após cada bloco de estudo."
+            }
+        };
+
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTag = document.getElementById('modalTag');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalProblem = document.getElementById('modalProblem');
+        const modalSolution = document.getElementById('modalSolution');
+
+        function openModal(id) {
+            const data = detailsData[id];
+            if(data) {
+                modalTag.innerText = data.tag;
+                modalTitle.innerText = data.title;
+                modalProblem.innerText = data.problem;
+                modalSolution.innerText = data.solution;
+                modalOverlay.classList.add('active');
+            }
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
+
+        // Fechar modal ao clicar fora do container
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Fechar modal com a tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

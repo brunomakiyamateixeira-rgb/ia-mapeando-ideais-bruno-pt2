@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de rotinas de estudos Bruno Makiyama</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        :root {
+            --primary: #6C5CE7;
+            --primary-light: #A29BFE;
+            --bg-dark: #0F0C20;
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --text-color: #F1F2F6;
+            --text-dim: #A4B0BE;
+            --accent: #FF7675;
+        }
+        body { background-color: var(--bg-dark); color: var(--text-color); min-height: 100vh; overflow-x: hidden; position: relative; }
+        .bg-3d-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; perspective: 1000px; overflow: hidden; }
+        .bg-3d-grid {
+            position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
+            background-image: linear-gradient(to right, rgba(108, 92, 231, 0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(108, 92, 231, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px; transform: rotateX(60deg) translateZ(-100px); animation: moveGrid 20s linear infinite;
+        }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.5; animation: floatOrb 10s ease-in-out infinite alternate; }
+        .orb-1 { width: 350px; height: 350px; background: #6C5CE7; top: 10%; left: 15%; }
+        .orb-2 { width: 300px; height: 300px; background: #FF7675; bottom: 10%; right: 15%; animation-delay: -5s; }
+        @keyframes moveGrid { 0% { transform: rotateX(60deg) translateY(0); } 100% { transform: rotateX(60deg) translateY(50px); } }
+        @keyframes floatOrb { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-40px) scale(1.1); } }
+        header { text-align: center; padding: 3rem 1rem 1.5rem; backdrop-filter: blur(5px); }
+        header h1 { font-size: 2.2rem; font-weight: 700; background: linear-gradient(135deg, #FFF, var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+        header p { color: var(--text-dim); font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
+        main { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .card {
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 1.8rem;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; text-decoration: none; color: inherit;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent)); opacity: 0; transition: opacity 0.3s ease;
+        }
+        .card:hover { transform: translateY(-8px) scale(1.02); border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); }
+        .card:hover::before { opacity: 1; }
+        .card-tag { align-self: flex-start; font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; background: rgba(108, 92, 231, 0.2); color: var(--primary-light); text-transform: uppercase; margin-bottom: 1rem; }
+        .card h3 { font-size: 1.25rem; margin-bottom: 0.8rem; font-weight: 600; }
+        .card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem; }
+        .card-btn { background: transparent; color: #FFF; border: 1px solid var(--card-border); padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease; text-align: center; }
+        .card:hover .card-btn { background: var(--primary); border-color: var(--primary); }
+        @media (max-width: 600px) { header h1 { font-size: 1.6rem; } .cards-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="bg-3d-container">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="bg-3d-grid"></div>
+    </div>
+
+    <header>
+        <h1>Organizador de rotinas de estudos Bruno Makiyama</h1>
+        <p>Protótipo Interativo: Mapeamento dos principais desafios, incômodos e insatisfações da vida estudantil.</p>
+    </header>
+
+    <main>
+        <div class="cards-grid">
+            <a href="procrastinacao.html" class="card">
+                <div>
+                    <span class="card-tag">Insatisfação</span>
+                    <h3>Procrastinação & Falta de Foco</h3>
+                    <p>Dificuldade em iniciar as tarefas e distrações constantes com redes sociais e celular.</p>
+                </div>
+                <div class="card-btn">Ver Solução & Detalhes</div>
+            </a>
+
+            <a href="sobrecarga.html" class="card">
+                <div>
+                    <span class="card-tag">Organização</span>
+                    <h3>Sobrecarga de Conteúdo</h3>
+                    <p>Sensação de estar afogando em tantas matérias, prazos e trabalhos acumulados.</p>
+                </div>
+                <div class="card-btn">Ver Solução & Detalhes</div>
+            </a>
+
+            <a href="burnout.html" class="card">
+                <div>
+                    <span class="card-tag">Incômodo</span>
+                    <h3>Exaustão e Burnout Estudantil</h3>
+                    <p>Cansaço mental extremo por falta de pausas estratégicas e noites mal dormidas.</p>
+                </div>
+                <div class="card-btn">Ver Solução & Detalhes</div>
+            </a>
+
+            <a href="planejamento.html" class="card">
+                <div>
+                    <span class="card-tag">Rotina</span>
+                    <h3>Falta de Planejamento Claro</h3>
+                    <p>Não saber por onde começar a estudar no dia, perdendo tempo decidindo matérias.</p>
+                </div>
+                <div class="card-btn">Ver Solução & Detalhes</div>
+            </a>
+
+            <a href="materiais.html" class="card">
+                <div>
+                    <span class="card-tag">Problema Real</span>
+                    <h3>Ambiente & Materiais Dispersos</h3>
+                    <p>Arquivos espalhados em várias pastas, anotações perdidas e bagunça no espaço físico.</p>
+                </div>
+                <div class="card-btn">Ver Solução & Detalhes</div>
+            </a>
+
+            <a href="retencao.html" class="card">
+                <div>
+                    <span class="card-tag">Insatisfação</span>
+                    <h3>Estudo Passivo Sem Retenção</h3>
+                    <p>Ler horas de teoria sem conseguir lembrar do conteúdo na hora de realizar a prova.</p>
+                </div>
+                <div class="card-btn">Ver Solução & Detalhes</div>
+            </a>
+        </div>
+    </main>
+</body>
+</html>

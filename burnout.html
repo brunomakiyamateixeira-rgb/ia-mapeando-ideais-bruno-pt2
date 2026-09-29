@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exaustão e Burnout Estudantil - Bruno Makiyama</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        :root {
+            --primary: #6C5CE7;
+            --primary-light: #A29BFE;
+            --bg-dark: #0F0C20;
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --text-color: #F1F2F6;
+            --text-dim: #A4B0BE;
+            --accent: #FF7675;
+        }
+        body { background-color: var(--bg-dark); color: var(--text-color); min-height: 100vh; overflow-x: hidden; position: relative; }
+        .bg-3d-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; perspective: 1000px; overflow: hidden; }
+        .bg-3d-grid {
+            position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
+            background-image: linear-gradient(to right, rgba(108, 92, 231, 0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(108, 92, 231, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px; transform: rotateX(60deg) translateZ(-100px); animation: moveGrid 20s linear infinite;
+        }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.5; animation: floatOrb 10s ease-in-out infinite alternate; }
+        .orb-1 { width: 350px; height: 350px; background: #6C5CE7; top: 10%; left: 15%; }
+        .orb-2 { width: 300px; height: 300px; background: #FF7675; bottom: 10%; right: 15%; animation-delay: -5s; }
+        @keyframes moveGrid { 0% { transform: rotateX(60deg) translateY(0); } 100% { transform: rotateX(60deg) translateY(50px); } }
+        @keyframes floatOrb { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-40px) scale(1.1); } }
+        header { text-align: center; padding: 3rem 1rem 1.5rem; backdrop-filter: blur(5px); }
+        header h1 { font-size: 2.2rem; font-weight: 700; background: linear-gradient(135deg, #FFF, var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; }
+        header p { color: var(--text-dim); font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
+        main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+        .content-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 2rem; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); margin-bottom: 2rem; }
+        .tag { display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; background: rgba(108, 92, 231, 0.2); color: var(--primary-light); text-transform: uppercase; margin-bottom: 1rem; }
+        h2 { font-size: 1.5rem; color: #FFF; margin-bottom: 1rem; }
+        p { color: var(--text-dim); line-height: 1.7; margin-bottom: 1.2rem; font-size: 0.95rem; }
+        ul { margin-left: 1.5rem; color: var(--text-dim); margin-bottom: 1.5rem; }
+        li { margin-bottom: 0.5rem; line-height: 1.6; }
+        .figure-box { text-align: center; margin: 2rem 0; padding: 1.5rem; background: rgba(0, 0, 0, 0.3); border-radius: 12px; border: 1px dashed var(--card-border); }
+        .figure-box svg { max-width: 100%; height: auto; }
+        .caption { font-size: 0.85rem; color: var(--primary-light); margin-top: 0.8rem; display: block; }
+        .btn-back { display: inline-block; background: var(--primary); color: #FFF; text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; }
+        .btn-back:hover { background: #5a4bcf; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div class="bg-3d-container">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="bg-3d-grid"></div>
+    </div>
+
+    <header>
+        <h1>Exaustão e Burnout Estudantil</h1>
+        <p>Prevenção do esgotamento físico e mental por meio da gestão equilibrada do tempo.</p>
+    </header>
+
+    <main>
+        <div class="content-card">
+            <span class="tag">Incômodo</span>
+            <h2>Fadiga Cognitiva e Baixo Rendimento</h2>
+            <p>A crença de que passar noites estudando traz resultados é equivocada. A privação do sono e a falta de descansos programados reduzem drasticamente a capacidade de retenção e raciocínio lógico.</p>
+
+            <div class="figure-box">
+                <svg width="350" height="160" viewBox="0 0 350 160" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 20 130 Q 100 20 180 90 T 330 140" fill="none" stroke="#FF7675" stroke-width="3"/>
+                    <line x1="20" y1="140" x2="330" y2="140" stroke="#444" stroke-width="1"/>
+                    <text x="100" y="30" fill="#A29BFE" font-size="11">Pico de Rendimento</text>
+                    <text x="260" y="110" fill="#FF7675" font-size="11">Fadiga / Queda Acelerada</text>
+                </svg>
+                <span class="caption">Figura 1: Curva de rendimento em sessões prolongedas sem pausa.</span>
+            </div>
+
+            <h2>Ações Preventivas do Sistema</h2>
+            <p>O organizador incorpora alertas bio-ritmicos e controle do tempo de descanso:</p>
+            <ul>
+                <li><strong>Alertas de Pausa Obrigatória:</strong> Lembretes para desacelerar e realizar hidratação/alongamento.</li>
+                <li><strong>Mapeamento de Energia:</strong> Registro do nível de disposição para sugerir matérias mais leves nos momentos de cansaço.</li>
+                <li><strong>Incentivo à Qualidade de Sono:</strong> Encerramento programado das atividades de estudo à noite.</li>
+            </ul>
+        </div>
+
+        <a href="index.html" class="btn-back">← Voltar para o Início</a>
+    </main>
+</body>
+</html>
